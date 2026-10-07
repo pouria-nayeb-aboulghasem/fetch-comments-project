@@ -61,6 +61,77 @@ tsconfig.app.json
   - comment.d.ts
   - index.ts
 
+## .env file
+
+```ts
+  VITE_API_BASE_URL=https://jsonplaceholder.typicode.com
+```
+
+## constants folder
+
+apiEndpoints.ts
+
+```ts
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+const API_ENDPOINTS = {
+  comments: "/comments",
+} as const;
+
+export { API_BASE_URL, API_ENDPOINTS };
+```
+
+index.ts
+
+```ts
+import { API_BASE_URL, API_ENDPOINTS } from "./apiEndpoints";
+
+export { API_BASE_URL, API_ENDPOINTS };
+```
+
+## services folder
+
+commentsService.ts
+
+```ts
+import { API_BASE_URL, API_ENDPOINTS } from "@/constants";
+import type { CommentType } from "@/types";
+
+export const getComments = async (): Promise<CommentType[]> => {
+  const response = await fetch(`${API_BASE_URL}/${API_ENDPOINTS.comments}`);
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch comments");
+  }
+
+  return response.json();
+};
+```
+
+## types folder
+
+comment.d.ts
+
+```ts
+type CommentType = {
+  postId: number;
+  id: number;
+  name: string;
+  email: string;
+  body: string;
+};
+
+export type { CommentType };
+```
+
+index.ts
+
+```ts
+import type { CommentType } from "./comment";
+
+export type { CommentType };
+```
+
 ## Copyright
 
 MIT copyright
