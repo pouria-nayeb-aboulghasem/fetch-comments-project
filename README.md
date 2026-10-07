@@ -132,6 +132,97 @@ import type { CommentType } from "./comment";
 export type { CommentType };
 ```
 
+## components folder
+
+CommentItem.tsx
+
+```ts
+import type { CommentType } from "@/types";
+
+type CommentItemProps = {
+  comment: CommentType;
+};
+
+function CommentItem({ comment }: CommentItemProps) {
+  return (
+    <li className="space-y-2 bg-white border border-gray-200 rounded-xl p-4">
+      <header>
+        <h4 className="text-xl font-bold text-gray-900">{comment.name}</h4>
+        <h6 className="text-sm text-gray-400">{comment.email}</h6>
+      </header>
+
+      <p className="text-gray-600">{comment.body}</p>
+    </li>
+  );
+}
+
+export default CommentItem;
+```
+
+CommentList.tsx
+
+```ts
+import type { CommentType } from "@/types";
+import CommentItem from "./CommentItem";
+
+type CommentListProps = {
+  comments: CommentType[];
+};
+
+function CommentList({ comments }: CommentListProps) {
+  return (
+    <section>
+      <header className="mb-4 space-y-2 text-gray-900">
+        <h1 className="text-4xl font-bold">Comments</h1>
+        <p>List of users comments</p>
+      </header>
+
+      <ul className="flex flex-col gap-4">
+        {comments.map((comment) => (
+          <CommentItem key={comment.id} comment={comment} />
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+export default CommentList;
+
+```
+
+Error.tsx
+
+```ts
+type ErrorProps = {
+  error: string | null;
+};
+
+function Error({ error }: ErrorProps) {
+  return <div>{error}</div>;
+}
+
+export default Error;
+
+```
+
+Loading.tsx
+
+```ts
+import { RiLoader4Line } from "@remixicon/react";
+
+function Loading() {
+  return (
+    <div className="flex flex-col justify-center items-center my-4 text-2xl">
+      <RiLoader4Line className="animate-spin" />
+      <p>Processing…</p>
+    </div>
+  );
+}
+
+export default Loading;
+
+```
+
 ## Copyright
 
 MIT copyright
