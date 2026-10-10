@@ -1,7 +1,7 @@
 import { API_BASE_URL, API_ENDPOINTS } from "@/constants";
 import type { CommentType } from "@/types";
 
-export const getComments = async (): Promise<CommentType[]> => {
+const getComments = async (): Promise<CommentType[]> => {
   const response = await fetch(`${API_BASE_URL}/${API_ENDPOINTS.comments}`);
 
   if (!response.ok) {
@@ -10,3 +10,5 @@ export const getComments = async (): Promise<CommentType[]> => {
 
   return response.json();
 };
+
+export { getComments };
